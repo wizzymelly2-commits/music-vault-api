@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: music-vault-api
+    env: python
+    region: oregon
+    plan: starter        # free tier — upgrade for faster GPU
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ALLOWED_ORIGINS
+        value: "*"       # Replace with your Netlify URL after deploying frontend
+    disk:
+      name: vault-data
+      mountPath: /opt/render/project/src
+      sizeGB: 10
